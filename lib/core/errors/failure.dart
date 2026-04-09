@@ -4,4 +4,11 @@ part 'failure.freezed.dart';
 @freezed
 sealed class Failure with _$Failure {
   const factory Failure.server({required String message}) = ServerFailure;
+  const factory Failure.cache({required String message}) = CacheFailure;
+  const factory Failure.network({required String message}) = NetworkFailure;
+  const factory Failure.validation({required String message}) = ValidationFailure;
+
+const factory Failure.syncConflict({
+  required String message,dynamic localData,dynamic remoteData
+})= SyncConflictFailure;
 }

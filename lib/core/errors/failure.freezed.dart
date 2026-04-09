@@ -86,11 +86,15 @@ extension FailurePatterns on Failure {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ServerFailure value)?  server,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ServerFailure value)?  server,TResult Function( CacheFailure value)?  cache,TResult Function( NetworkFailure value)?  network,TResult Function( ValidationFailure value)?  validation,TResult Function( SyncConflictFailure value)?  syncConflict,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case ServerFailure() when server != null:
-return server(_that);case _:
+return server(_that);case CacheFailure() when cache != null:
+return cache(_that);case NetworkFailure() when network != null:
+return network(_that);case ValidationFailure() when validation != null:
+return validation(_that);case SyncConflictFailure() when syncConflict != null:
+return syncConflict(_that);case _:
   return orElse();
 
 }
@@ -108,14 +112,15 @@ return server(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ServerFailure value)  server,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ServerFailure value)  server,required TResult Function( CacheFailure value)  cache,required TResult Function( NetworkFailure value)  network,required TResult Function( ValidationFailure value)  validation,required TResult Function( SyncConflictFailure value)  syncConflict,}){
 final _that = this;
 switch (_that) {
 case ServerFailure():
-return server(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return server(_that);case CacheFailure():
+return cache(_that);case NetworkFailure():
+return network(_that);case ValidationFailure():
+return validation(_that);case SyncConflictFailure():
+return syncConflict(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -129,11 +134,15 @@ return server(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ServerFailure value)?  server,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ServerFailure value)?  server,TResult? Function( CacheFailure value)?  cache,TResult? Function( NetworkFailure value)?  network,TResult? Function( ValidationFailure value)?  validation,TResult? Function( SyncConflictFailure value)?  syncConflict,}){
 final _that = this;
 switch (_that) {
 case ServerFailure() when server != null:
-return server(_that);case _:
+return server(_that);case CacheFailure() when cache != null:
+return cache(_that);case NetworkFailure() when network != null:
+return network(_that);case ValidationFailure() when validation != null:
+return validation(_that);case SyncConflictFailure() when syncConflict != null:
+return syncConflict(_that);case _:
   return null;
 
 }
@@ -150,10 +159,14 @@ return server(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  server,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String message)?  server,TResult Function( String message)?  cache,TResult Function( String message)?  network,TResult Function( String message)?  validation,TResult Function( String message,  dynamic localData,  dynamic remoteData)?  syncConflict,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case ServerFailure() when server != null:
-return server(_that.message);case _:
+return server(_that.message);case CacheFailure() when cache != null:
+return cache(_that.message);case NetworkFailure() when network != null:
+return network(_that.message);case ValidationFailure() when validation != null:
+return validation(_that.message);case SyncConflictFailure() when syncConflict != null:
+return syncConflict(_that.message,_that.localData,_that.remoteData);case _:
   return orElse();
 
 }
@@ -171,13 +184,14 @@ return server(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  server,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String message)  server,required TResult Function( String message)  cache,required TResult Function( String message)  network,required TResult Function( String message)  validation,required TResult Function( String message,  dynamic localData,  dynamic remoteData)  syncConflict,}) {final _that = this;
 switch (_that) {
 case ServerFailure():
-return server(_that.message);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return server(_that.message);case CacheFailure():
+return cache(_that.message);case NetworkFailure():
+return network(_that.message);case ValidationFailure():
+return validation(_that.message);case SyncConflictFailure():
+return syncConflict(_that.message,_that.localData,_that.remoteData);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -191,10 +205,14 @@ return server(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  server,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String message)?  server,TResult? Function( String message)?  cache,TResult? Function( String message)?  network,TResult? Function( String message)?  validation,TResult? Function( String message,  dynamic localData,  dynamic remoteData)?  syncConflict,}) {final _that = this;
 switch (_that) {
 case ServerFailure() when server != null:
-return server(_that.message);case _:
+return server(_that.message);case CacheFailure() when cache != null:
+return cache(_that.message);case NetworkFailure() when network != null:
+return network(_that.message);case ValidationFailure() when validation != null:
+return validation(_that.message);case SyncConflictFailure() when syncConflict != null:
+return syncConflict(_that.message,_that.localData,_that.remoteData);case _:
   return null;
 
 }
@@ -262,6 +280,274 @@ class _$ServerFailureCopyWithImpl<$Res>
   return _then(ServerFailure(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class CacheFailure implements Failure {
+  const CacheFailure({required this.message});
+  
+
+@override final  String message;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CacheFailureCopyWith<CacheFailure> get copyWith => _$CacheFailureCopyWithImpl<CacheFailure>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CacheFailure&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'Failure.cache(message: $message)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $CacheFailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
+  factory $CacheFailureCopyWith(CacheFailure value, $Res Function(CacheFailure) _then) = _$CacheFailureCopyWithImpl;
+@override @useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class _$CacheFailureCopyWithImpl<$Res>
+    implements $CacheFailureCopyWith<$Res> {
+  _$CacheFailureCopyWithImpl(this._self, this._then);
+
+  final CacheFailure _self;
+  final $Res Function(CacheFailure) _then;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(CacheFailure(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class NetworkFailure implements Failure {
+  const NetworkFailure({required this.message});
+  
+
+@override final  String message;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$NetworkFailureCopyWith<NetworkFailure> get copyWith => _$NetworkFailureCopyWithImpl<NetworkFailure>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NetworkFailure&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'Failure.network(message: $message)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $NetworkFailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
+  factory $NetworkFailureCopyWith(NetworkFailure value, $Res Function(NetworkFailure) _then) = _$NetworkFailureCopyWithImpl;
+@override @useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class _$NetworkFailureCopyWithImpl<$Res>
+    implements $NetworkFailureCopyWith<$Res> {
+  _$NetworkFailureCopyWithImpl(this._self, this._then);
+
+  final NetworkFailure _self;
+  final $Res Function(NetworkFailure) _then;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(NetworkFailure(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class ValidationFailure implements Failure {
+  const ValidationFailure({required this.message});
+  
+
+@override final  String message;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ValidationFailureCopyWith<ValidationFailure> get copyWith => _$ValidationFailureCopyWithImpl<ValidationFailure>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ValidationFailure&&(identical(other.message, message) || other.message == message));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'Failure.validation(message: $message)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $ValidationFailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
+  factory $ValidationFailureCopyWith(ValidationFailure value, $Res Function(ValidationFailure) _then) = _$ValidationFailureCopyWithImpl;
+@override @useResult
+$Res call({
+ String message
+});
+
+
+
+
+}
+/// @nodoc
+class _$ValidationFailureCopyWithImpl<$Res>
+    implements $ValidationFailureCopyWith<$Res> {
+  _$ValidationFailureCopyWithImpl(this._self, this._then);
+
+  final ValidationFailure _self;
+  final $Res Function(ValidationFailure) _then;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
+  return _then(ValidationFailure(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class SyncConflictFailure implements Failure {
+  const SyncConflictFailure({required this.message, this.localData, this.remoteData});
+  
+
+@override final  String message;
+ final  dynamic localData;
+ final  dynamic remoteData;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SyncConflictFailureCopyWith<SyncConflictFailure> get copyWith => _$SyncConflictFailureCopyWithImpl<SyncConflictFailure>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncConflictFailure&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.localData, localData)&&const DeepCollectionEquality().equals(other.remoteData, remoteData));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,message,const DeepCollectionEquality().hash(localData),const DeepCollectionEquality().hash(remoteData));
+
+@override
+String toString() {
+  return 'Failure.syncConflict(message: $message, localData: $localData, remoteData: $remoteData)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $SyncConflictFailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
+  factory $SyncConflictFailureCopyWith(SyncConflictFailure value, $Res Function(SyncConflictFailure) _then) = _$SyncConflictFailureCopyWithImpl;
+@override @useResult
+$Res call({
+ String message, dynamic localData, dynamic remoteData
+});
+
+
+
+
+}
+/// @nodoc
+class _$SyncConflictFailureCopyWithImpl<$Res>
+    implements $SyncConflictFailureCopyWith<$Res> {
+  _$SyncConflictFailureCopyWithImpl(this._self, this._then);
+
+  final SyncConflictFailure _self;
+  final $Res Function(SyncConflictFailure) _then;
+
+/// Create a copy of Failure
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,Object? localData = freezed,Object? remoteData = freezed,}) {
+  return _then(SyncConflictFailure(
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,localData: freezed == localData ? _self.localData : localData // ignore: cast_nullable_to_non_nullable
+as dynamic,remoteData: freezed == remoteData ? _self.remoteData : remoteData // ignore: cast_nullable_to_non_nullable
+as dynamic,
   ));
 }
 
