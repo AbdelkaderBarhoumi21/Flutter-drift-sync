@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_drift_sync/core/errors/failure.dart';
 
 /// A Future that returns Either a Failure or a success value T
 typedef ResultFuture<T> = Future<Either<Failure, T>>;
